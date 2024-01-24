@@ -17,13 +17,39 @@ const PromptCardList = ({data,handleTagClick}) => {
   )
 }
 
+
+
+const filterSearchResults = (searchtext) => {
+
+  const regex = new RegExp(searchtext, "i");
+
+  return allPosts.filter(
+    (item) =>
+      regex.test(item.creator.username) ||
+      regex.test(item.tag) ||
+      regex.test(item.prompt)
+  );
+}
+
 const Feed = () => {
 
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
+
+  console.log(posts)
+
+
   const handleSearchChange = (e) => {
 
+      setSearchText(e.target.value);
+  
+      const searchResults = filterSearchResults(e.target.value);
+
+      console.log(e.target.value)
+
   }
+
+
 
   useEffect(() => {
     const fetchPosts = async () => {
